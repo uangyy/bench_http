@@ -1,6 +1,7 @@
 CC ?= gcc
 CFLAGS ?= -O0 -Wall -g
-objects := ae.o bench_http.o http_parser.o
+LIBS := -lpthread
+objects := ae.o bench_http.o http_parser.o units.o
 
 bench_http : $(objects)
 	$(CC) $(CFLAGS) $^ -o $@
@@ -12,6 +13,9 @@ http_parser.o : http_parser.c
 	$(CC) $(CFLAGS) -c $^ -o $@
 
 bench_http.o : bench_http.c
+	$(CC) $(CFLAGS) $(LIBS) -c $^ -o $@
+
+units.o : units.c
 	$(CC) $(CFLAGS) -c $^ -o $@
 
 clean:

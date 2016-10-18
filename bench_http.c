@@ -2,9 +2,11 @@
 #include <inttypes.h>
 #include <stdio.h>
 #include <string.h>
+#include <pthread.h>
 
 #include "bench_http.h"
 #include "main.h"
+#include "units.h"
 
 static struct config{
     uint32_t threads;
@@ -27,12 +29,18 @@ static void usage()
 int main(int argc, char **argv)
 {
     char *url;
+    uint64_t number;
     struct http_parser_url parts;
     if (parse_args(argc, argv, &cfg, &url, &parts) == -1)
     {
         usage();
         exit(1);
     }
+    scan_number("10K", &number);
+    fprintf(stderr, "%"PRIu64"\n", number);
+
+    scan_time("10h", &number);
+    fprintf(stderr, "%"PRIu64"\n", number);
     return 0;
 }
 
